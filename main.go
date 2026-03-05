@@ -13,8 +13,7 @@ func getCords() (x, y int) { // Named returns = These named vairables are automa
 
 func main() { // =====> ENTRY POINT OF THE PROGRAM
 	fmt.Println("Starting the Textio server")
-
-	// Sad way of declaring variables
+		// Sad way of declaring variables
 	var mySkillIssues int
 	fmt.Println(mySkillIssues)
 
@@ -26,6 +25,7 @@ func main() { // =====> ENTRY POINT OF THE PROGRAM
 	aiSkillIssues := 1000
 
 	fmt.Println(aiSkillIssues)
+	printHelloWorld();
 
 	const firstName = "Sahil"
 	const lastName = "Jassal"
@@ -33,12 +33,27 @@ func main() { // =====> ENTRY POINT OF THE PROGRAM
 	x, y := getCords();
 	fmt.Printf("X: %d, Y: %d\n", x, y)
 
-	printHelloWorld();
+	fmt.Println("The hello world must be printed now")
 }
 
 func printHelloWorld() {
+	defer func () {
+		if r := recover(); r != nil {
+			fmt.Printf("Something went wrong: %v\n", r)
+		}
+	}();
+
 	defer fmt.Println("Two times") 
 	defer fmt.Println("World") // this function's execution is defer to just before enclosing function returns
 
 	fmt.Println("Hello")
+
+	a := account{
+		balance: 25000.0,
+	}
+	balance,err := performBankingOperation(a, 200.0, "withdrawal")
+	fmt.Println("Error: ", err)
+	fmt.Printf("Balance after withdrawal: %.1f\n", balance)
 }
+
+

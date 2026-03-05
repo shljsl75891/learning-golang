@@ -115,3 +115,22 @@ So, the order of fields in struct can affect the memory layout and performance. 
 > empty 1 := empty{}
 > empty2 := struct{}{}
 > ```
+
+## Unique way of error handling in GO
+
+The error handling in Go is very unique compared to other programming languages. There is no try catch thing... or catching exceptions. Instead, an error is just treated as straightword normal return value.
+
+```go
+type error interface {
+    Error() string
+}
+```
+
+Each function should be responsible for its error handling, and returning the error appropriately `nil` or non `nil` value. The caller of the function can decide the behavior of each function's error handling differently based on whether the error value returned is `nil` or not.
+
+#### Panic and Recover in error handling
+
+- There is a mechanism for creating panic in call stack using `panic` function in GO. Doing so, will result in unwinding the calls from call stacks by popping them out one by one. But, while this happens, Go ensure to call each defer function in order to ensure proper cleanup of resources created within those function calls.
+- We can also recover a `panic` using `recover` function. The `recover` function can only be called in deferred function. Functions till `panic` is recovered are popped out (ensuring their corresponding deferred functions are invoked in correct order), and normal execution of parent function (of function that recovered the `panic`) resumes.
+- In case of no function defering the `recover`, the goroutine crashes after all function calls are popped and their deferred functions are executed.
+- Using `log.Fatal` is instead cleaner way to exit the code. In this case, no deferred functions are executed. In is basically similar to `Print` followed by a call to `os.Exit(1)`.
