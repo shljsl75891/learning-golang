@@ -195,6 +195,8 @@ func main() {
 - In GO programming language, maps are built-in data structures that provide a way to store and retrieve key-value pairs.
 - Similar to slices, they also behave like passed by reference to a function call due to its internal structure.
 - In GO, except `slices`, `maps` and `functions`, all other types are comparable using `==` operator such as `bool`, `int`, `string`, `pointer`, `channel`, and `interface`. Even `struct` and `array` are also comparable if all their fields or elements are comparable. According to language specification, all comparable types are eligible to be used as keys in a map.
+- We can distinguish between zero value and non existence of key in map using `comma ok` idiom. When we try to access a key in map, it returns two values: the value associated with the key (or zero value if key not present) and a `bool` indicating whether the key exists in the map or not.
+- We can also implement a set like data structure using a map with value type `bool` or empty structs. As, indexing of maps returns zero value of type along with `false` indicating non existence of key using `comma ok` idiom.
 
 ```go
 type Key struct {
