@@ -225,4 +225,6 @@ Recalling, I learnt following in C++.
   - To declare a pointer variable, we use `*` before the type. For example, `var p *int` declares a pointer to an integer.
   - To dereference a pointer, we use `*` before the pointer variable. For example, if `p` is a pointer to an integer, `*p` gives us the value stored at that memory address.
 
-> Selector expressions = Shorthand syntax to access fields of structs. Eg. `analytics.MessagesTotal = (*analytics).MessagesTotal`.
+> Selector expressions = Shorthand syntax to access fields of structs. Eg. `analytics.MessagesTotal = (*analytics).MessagesTotal`. We were using this unconsciously using receiver functions on structs. They are also called **Pointer Receivers**.
+
+**_NOTE_**: Deferencing a `nil` pointer can lead to crashing program at runtime due to `panic`. It is always good practice to check if pointer is `nil` before dereferencing it.
