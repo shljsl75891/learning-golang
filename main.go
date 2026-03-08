@@ -62,7 +62,7 @@ func learnSlices() {
 
 	fmt.Printf("Array is fixed size: %v, but slices are dynamically sized (although just a abstracted underlying array): %v\n", arrays, slices);
 
-	for i, element := range arrays { // similar to for i := 0; i < len(slices); i++, but modern way to write
+	for i, element := range arrays { // similar to for i := 0; i < len(slices); i++, but modern way to write, and element is copy of the value, not reference
 		fmt.Printf("array[%d]: %d ", i, element);
 	}
 
@@ -79,3 +79,4 @@ func learnSlices() {
 	emptySlice := []int{};
 	fmt.Printf("Empty slice: %v, and is nil: %t. Capacity: %d, Length: %d\n", emptySlice, emptySlice == nil, cap(emptySlice), len(emptySlice));
 }
+

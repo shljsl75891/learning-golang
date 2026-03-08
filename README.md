@@ -172,3 +172,6 @@ func main() {
 
 - The `make` function is used to create slices, maps, and channels in Go. This is used to pre-allocate slice with a specified length and capacity. It is more efficient than using `append` to create a slice from an array when you know the size of the slice in advance, as it avoids the overhead of multiple allocations and copying that can occur when appending to a slice.
 - The `append` function is used to add elements to the end of a slice. It is variadic function as well. It takes a slice and one or more values to append, and returns a new slice with the values added. If the capacity of the original slice is exceeded, `append` will create a new underlying array with double the capacity, copy the existing elements to it, and update the slice's pointer and capacity accordingly.
+  > Always use `append` function on the same slice the result is assigned to. Otherwise, it can lead to unexpected behavior if underlying array has enough capacity to fill new elements, and more than 1 slice is pointing to same underlying array. As, `append` function changes underlying array if it has enough capacity for newer elements.
+
+![](/assets/2026-03-08-14-29-33.png)
