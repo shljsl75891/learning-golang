@@ -62,9 +62,10 @@ func learnSlices() {
 
 	fmt.Printf("Array is fixed size: %v, but slices are dynamically sized (although just a abstracted underlying array): %v\n", arrays, slices);
 
-	for i := 0; i < len(arrays); i++ {
-		fmt.Printf("%d ", i);
+	for i, element := range arrays { // similar to for i := 0; i < len(slices); i++, but modern way to write
+		fmt.Printf("array[%d]: %d ", i, element);
 	}
+
 
 	fmt.Printf("\nThe capacity of slice %v is %d and its length is %v\n", slices, cap(slices), len(slices))
 	fmt.Println("Appending 6 in slices")

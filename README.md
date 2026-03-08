@@ -134,3 +134,41 @@ Each function should be responsible for its error handling, and returning the er
 - We can also recover a `panic` using `recover` function. The `recover` function can only be called in deferred function. Functions till `panic` is recovered are popped out (ensuring their corresponding deferred functions are invoked in correct order), and normal execution of parent function (of function that recovered the `panic`) resumes.
 - In case of no function defering the `recover`, the goroutine crashes after all function calls are popped and their deferred functions are executed.
 - Using `log.Fatal` is instead cleaner way to exit the code. In this case, no deferred functions are executed. In is basically similar to `Print` followed by a call to `os.Exit(1)`.
+
+## Slices
+
+Arrays are fixed size contiguous block of memory, while slices are dynamic size and more flexible. Slices are built on top of arrays and provide a more convenient way to work with sequences of data. They have three components: a pointer to the underlying array, the length of the slice (number of elements in the slice), and the capacity of the slice (the maximum number of elements that can be stored in the underlying array starting from the pointer). When you append to a slice and it exceeds its capacity, Go automatically creates a new underlying array with double the capacity, copies the existing elements to it, and updates the slice's pointer and capacity accordingly.
+
+#### Variadic Function
+
+Just like a spread operator in javascript. We can any aribitrary number of arguments to a function using `...` syntax. The arguments becomes a slice of the specified type. Eg. `fmt.Println`, `fmt.Sprintf` etc. are variadic functions.
+
+```go
+func concat(strs ...string) string { // SPREAD OPERATOR - to accept variable number of arguments as slice
+    final := ""
+    // strs is just a slice of strings
+    for i := 0; i < len(strs); i++ {
+        final += strs[i]
+    }
+    return final
+}
+
+func printStrings(strings ...string) {
+	for i := 0; i < len(strings); i++ {
+		fmt.Println(strings[i])
+	}
+}
+
+func main() {
+    final := concat("Hello ", "there ", "friend!")
+    fmt.Println(final)
+    // Output: Hello there friend!
+    names := []string{"bob", "sue", "alice"}
+    printStrings(names...) // UNSPREAD OPERATOR - to pass slice as variadic arguments
+}
+```
+
+#### `make` and `append` functions
+
+- The `make` function is used to create slices, maps, and channels in Go. This is used to pre-allocate slice with a specified length and capacity. It is more efficient than using `append` to create a slice from an array when you know the size of the slice in advance, as it avoids the overhead of multiple allocations and copying that can occur when appending to a slice.
+- The `append` function is used to add elements to the end of a slice. It is variadic function as well. It takes a slice and one or more values to append, and returns a new slice with the values added. If the capacity of the original slice is exceeded, `append` will create a new underlying array with double the capacity, copy the existing elements to it, and update the slice's pointer and capacity accordingly.
