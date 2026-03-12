@@ -253,9 +253,9 @@ Recalling, I learnt following in C++.
 > [!TIP]
 > `go run` command is used to quickly compile and run go package named `main`. The compiled binary is stored in temporary directory and is deleted after execution. Use it for quick debugging and testing on local
 
-##### Remote Packages
+#### Remote Packages
 
-The advisable way to use packages is to publish them as remote packages. For local development, we can use `replace` directive in `go.mod` file to replace the module path with a local directory path. This is useful when we are developing a module locally and want to test it without publishing it to a remote repository
+For local development, we can use `replace` directive in `go.mod` file to replace the module path with a local directory path. This is useful when we are developing a module locally and want to test it without publishing it to a remote repository. But, it is advisable to publish the modules to remote repositories like github, gitlab etc.
 
 ```
 WHERE SHOULD GO ACTUALLY FIND IT?
@@ -264,3 +264,14 @@ replace example.com/username/mystrings v0.0.0 => ../mystrings =========> This di
 WHAT DOES MY MODULE DEPEND ON?
 require example.com/username/mystrings v0.0.0
 ```
+
+#### Clean Packages
+
+We should follow the OOPS principle of encapsulation while designing packages.
+
+- We should only export the necessary functions, types, variables and constants that are required for the users of the package.
+- We should also avoid exporting any internal implementation details that are not required for the users of the package. This will help in maintaining the integrity of the package and prevent any unintended usage of the package's internal details.
+- The `main` package should not be treated as library, and there's no need to export functions from it. A clean package should never have specific knowledge about a particular application that uses it.
+
+> [!NOTE]
+> The unexported functions within a package can and should change often for testing, refactoring, and bug fixing. A well-designed library must have a stable API so that users don't get breaking changes each time they update the package version. In Go, this means not changing exported function’s signatures.
